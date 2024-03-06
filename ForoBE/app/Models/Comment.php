@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
-    protected $guarded = ['tags','text', 'images', 'likes', 'dislikes', 'author'];
+    protected $fillable = ['tags','text', 'images', 'likes', 'dislikes', 'author'];
 }

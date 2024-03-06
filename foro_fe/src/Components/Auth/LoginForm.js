@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
+import {useNavigate} from "react-router-dom";
+import {loginUser} from "../../Utils/ApiCalls";
+import storage from "../../Storage/storage"
 
 const LoginForm = () => {
     const [userData, setUserData] = useState({
         email: '',
         password: ''
     });
+    const go = useNavigate()
+
+    const login = async (e) => {
+        e.preventDefault()
+        const res = await loginUser(userData)
+        if(res?.status === true) {
+            storage.set("authToken", res.token)
+            storage.set("authUser", res.user)
+            go("/dashboard")
+        }
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUserData({ ...userData, [name]: value });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Aquí puedes enviar los datos de inicio de sesión del usuario al servidor o realizar cualquier otra lógica necesaria
-        console.log(userData);
     };
 
     return (
@@ -22,7 +30,7 @@ const LoginForm = () => {
             <div className="row justify-content-center">
                 <div className="col-lg-8">
                     <h2>Iniciar Sesión</h2>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={login}>
                         <div className="form-group">
                             <label htmlFor="email">Correo electrónico:</label>
                             <input

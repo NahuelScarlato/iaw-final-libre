@@ -1,9 +1,9 @@
 import React from 'react';
-import LoginForm from './Auth/LoginForm';
-import RegisterForm from './Auth/RegisterForm';
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
-export const Welcome = () => {
-    const [showLogin, setShowLogin] = React.useState(false);
+const Welcome = () => {
+    const [showLogin, setShowLogin] = React.useState(true);
 
     const handleToggleForm = () => {
         setShowLogin(!showLogin);
@@ -15,8 +15,8 @@ export const Welcome = () => {
                 <div className="col-md-6">
                     <h2>Bienvenido a Roddut</h2>
                     <div className="text-center">
-                        {showLogin ? <LoginForm /> : <RegisterForm />}
-                        <button className="btn btn-primary m-2" onClick={handleToggleForm}>
+                        {showLogin ? <LoginForm /> : <RegisterForm handleToggleForm={handleToggleForm}/>}
+                        <button className="btn btn-link text-decoration-none" onClick={handleToggleForm}>
                             {
                                 showLogin
                                 ? "Si aun no estas registrado regístrate aquí"
@@ -27,5 +27,7 @@ export const Welcome = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
+
+export default Welcome

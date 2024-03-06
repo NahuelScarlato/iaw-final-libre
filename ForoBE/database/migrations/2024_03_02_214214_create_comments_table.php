@@ -13,8 +13,8 @@ return new class extends Migration
             $table->json('tags');
             $table->text('text');
             $table->json('images');
-            $table->integer('likes');
-            $table->integer('dislikes');
+            $table->json('likes');
+            $table->json('dislikes');
             $table->unsignedBigInteger('author');
             $table->foreign('author')->references('id')->on('users')->onDelete('cascade');
 

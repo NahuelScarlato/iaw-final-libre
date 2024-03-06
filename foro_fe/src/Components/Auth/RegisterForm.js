@@ -1,48 +1,30 @@
 import React, {useState} from 'react';
-import {useNavigate} from "react-router-dom";
-import {registerUser} from "./ApiCalls";
-import {Alert} from "../Alert"
+import {registerUser} from "../../Utils/ApiCalls";
+import storage from "../../Storage/storage"
 
-const DEFAULT_ALERT_VALUE = {
-    message: '',
-    alertType: '',
-    show: false
+const DEFAULT_USER_DATA = {
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: ''
 }
 
-const RegisterForm = () => {
-    const [userData, setUserData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-    });
-    const [formAlert, setFormAlert] = useState(DEFAULT_ALERT_VALUE)
-
-    const showAlert = (message, alertType) => {
-        setFormAlert({
-            message: message,
-            alertType: alertType,
-            show: true
-            }
-        )
-    }
+const RegisterForm = ({handleToggleForm}) => {
+    const [userData, setUserData] = useState(DEFAULT_USER_DATA);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUserData({ ...userData, [name]: value });
     };
 
-    const navigate = useNavigate()
-
-    const handleSubmit = (e) => {
+    const register = async (e) => {
         e.preventDefault()
-        setFormAlert(DEFAULT_ALERT_VALUE)
-
-        registerUser(userData).then(() =>
-            navigate("/dashboard")
-        ).catch((e) =>
-            showAlert("Error al registrar un nuevo usuario. " + e.message, "error")
-        )
+        const res = await registerUser(userData)
+        if(res?.status === true) {
+            storage.set("authToken", res.token)
+            storage.set("authUser", res.user)
+            handleToggleForm()
+        }
     };
 
     return (
@@ -50,7 +32,7 @@ const RegisterForm = () => {
             <div className="row justify-content-center">
                 <div className="col-lg-8">
                     <h2>Registro de Usuario</h2>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={register}>
                         <div className="form-group">
                             <label htmlFor="name">Nombre:</label>
                             <input
@@ -88,18 +70,17 @@ const RegisterForm = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="confirmPassword">Confirma tu contraseña:</label>
+                            <label htmlFor="password_confirmation">Confirma tu contraseña:</label>
                             <input
                                 type="password"
                                 className="form-control"
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                value={userData.confirmPassword}
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                value={userData.password_confirmation}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                        {formAlert.show ? <Alert message={formAlert.message} alertType={formAlert.alertType}/> : null}
                         <button type="submit" className="btn btn-primary m-2">Registrar</button>
                     </form>
                 </div>

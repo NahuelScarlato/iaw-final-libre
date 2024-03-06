@@ -1,18 +1,16 @@
 import React, {useEffect, useState} from "react";
-import axios from 'axios';
 import {Link} from "react-router-dom";
 
-import {Thread} from "./Thread";
+import {getAllThreads} from "../../Utils/ApiCalls";
+import Thread from "./Thread";
 
-
-const endpoint = "http://localhost:8000/api"
-
-export const ThreadsList = () => {
+const ThreadsList = () => {
     const [threads, setThreads] = useState([])
+    const [loading, setLoading] = useState(true)
 
     const getThreads = async () => {
-        const response = await axios.get(`${endpoint}/threads`)
-        setThreads(response.data)
+        const response = await getAllThreads()
+        setThreads(response)
     }
 
     const createNewThread = () => {
@@ -21,16 +19,23 @@ export const ThreadsList = () => {
 
     useEffect(()=>{
         getThreads()
+        console.log(threads)
+        setLoading(false)
     }, [])
+
+    if (loading) return <>Loading...</>
 
     return <div>
         <h3>Threads</h3>
         <div className="d-grid gap-2">
             <Link to="/create" className="'bt btn-success bt-lg mt-2 mb-2 text-white">Create New Thread</Link>
         </div>
-
         <div>
-            <Thread threadId="1" threadtitle="Titulo" threadClosed={false}/>
+            {threads.map((thread) => (
+                <Thread thread={thread}/>
+            ))}
         </div>
     </div>
 }
+
+export default ThreadsList

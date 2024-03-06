@@ -11,6 +11,6 @@ class CorsMiddleware
         return $next($request)
             ->header('Access-Control-Allow-Origin', 'http://localhost:3000')
             ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-            ->header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Origin');
+            ->header('Access-Control-Allow-Headers', 'Content-Type, Origin');
     }
 }

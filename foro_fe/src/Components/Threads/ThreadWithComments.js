@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-export const Thread = ({threadId,threadTitle,threadClosed}) => {
+const ThreadWithComments = ({threadId,threadTitle,threadClosed}) => {
     const [likes, setLikes] = useState(0);
     const [dislikes, setDislikes] = useState(0);
     const [comments, setComments] = useState([]);
@@ -65,3 +65,5 @@ export const Thread = ({threadId,threadTitle,threadClosed}) => {
         </div>
     )
 }
+
+export default ThreadWithComments
