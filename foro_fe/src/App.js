@@ -16,7 +16,7 @@ function App() {
                 <Route path="/" element={ <Welcome/> }/>
                 <Route element={ <ProtectedRoutes/> }>
                     <Route path="/dashboard" element={ <Dashboard/> }/>
-                    <Route path="/thread/:threadId" component={ <Thread /> }/>
+                    <Route path="/thread/:threadId" element={ <Thread /> }/>
                     <Route path="/my-threads" element={ <MyThreads/> }/>
                 </Route>
             </Routes>

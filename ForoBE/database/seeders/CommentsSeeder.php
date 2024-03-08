@@ -12,28 +12,28 @@ class CommentsSeeder extends Seeder
     {
         \App\Models\Comment::factory()->create([
             'text' => 'CS 2 is the best!',
-            'tags' => "[\"CS2\"]",
-            'images' => "[]",
-            'likes' => "[]",
-            'dislikes' => "[]",
+            'tags' => json_decode("[\"CS2\"]", true),
+            'images' => json_decode("[]", true),
+            'likes' => json_decode("[]", true),
+            'dislikes' => json_decode("[]", true),
             'author' => 2
         ]);
 
         \App\Models\Comment::factory()->create([
             'text' => 'Nah, I like LOL more',
-            'tags' => "[\"LOL\"]",
-            'images' => "[]",
-            'likes' => "[]",
-            'dislikes' => "[]",
+            'tags' => json_decode("[\"LOL\"]", true),
+            'images' => json_decode("[]", true),
+            'likes' => json_decode("[]", true),
+            'dislikes' => json_decode("[]", true),
             'author' => 3
         ]);
 
         \App\Models\Comment::factory()->create([
             'text' => 'UNS rules',
-            'tags' => "[\"UNS\"]",
-            'images' => "[]",
-            'likes' => "[]",
-            'dislikes' => "[]",
+            'tags' => json_decode("[\"UNS\"]", true),
+            'images' => json_decode("[]", true),
+            'likes' => json_decode("[]", true),
+            'dislikes' => json_decode("[]", true),
             'author' => 3
         ]);
     }

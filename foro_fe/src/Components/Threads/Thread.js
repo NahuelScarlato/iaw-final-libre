@@ -9,22 +9,32 @@ const Thread = () => {
     const [loading, setLoading] = useState(true)
     const { threadId } = useParams()
 
-    const getFullThread = async () => {
-        const response = await getThreadByIdWithComments()
-        setThread(response)
-    }
+    useEffect(() => {
+        const getFullThread = async () => {
+            try {
+                setLoading(true);
+                const response = await getThreadByIdWithComments(threadId);
+                setThread(response);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching thread:", error);
+                setLoading(false);
+            }
+        };
 
-    useEffect(()=>{
-        getFullThread(threadId)
-        setLoading(false)
-    },[threadId])
+        getFullThread();
+    }, [threadId]);
 
-    if (loading) return <>Loading...</>
+    if (loading || !thread.comments) return <div className="">Loading...</div>
 
-    return <>
-        <ThreadPreview key={"thread-" + thread.id} thread={thread}/>
-        <CommentsList threadId={thread.id} comments={thread.comments}/>
-    </>
+    return (
+        <div className="container mt-5">
+            <div className="justify-content-center">
+                <ThreadPreview key={"thread-" + thread.id} thread={thread} />
+                <CommentsList threadId={thread.id} threadComments={thread.comments}/>
+            </div>
+        </div>
+    )
 }
 
 export default Thread

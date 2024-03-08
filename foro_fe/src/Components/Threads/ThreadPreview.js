@@ -1,6 +1,6 @@
 import React from "react"
 
-const ThreadPreview = ({ thread }) => {
+const ThreadPreview = ({ thread, showCommentsLink}) => {
     const renderImages = () => {
         if (!thread.images || thread.images.length === 0) {
             return null
@@ -51,7 +51,9 @@ const ThreadPreview = ({ thread }) => {
                 </p>
                 {renderImages()}
                 <p className="card-text text-end">
-                    <a className="mx-2" href={"/thread/" + thread.id}>{thread.comments.length + " comments"}</a>
+                    {showCommentsLink &&
+                        <a className="mx-2" href={"/thread/" + thread.id}>{thread.comments.length + " comments"}</a>
+                    }
                     <button className="btn btn-primary mx-1">{thread.likes.length ?? 0} Likes</button>
                     <button className="btn btn-secondary mx-1">{thread.dislikes.length ?? 0} Dislikes</button>
                     <small className="text-muted mx-1">{ thread.author + " wrote on " + new Date(thread.created_at).toLocaleString()}</small>

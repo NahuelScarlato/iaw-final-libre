@@ -25,18 +25,4 @@ export const sendRequest = async (method,params,url,token=true) => {
     }
 }
 
-export const confirmation = async (name,url,redir) => {
-    const alert = Swal.mixin({buttonsStyling:true})
-    alert.fire({
-        title: "Estas seguro de realizar esta accion?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonText: '<i class="fa-solid fa-check"></i>Yes',
-        cancelButtonText: '<i class="fa-solid fa-ban"></i>Cancel'
-    }).then((result) => {
-        if(result.isConfirmed)
-            sendRequest("DELETE",{},url,redir)
-    })
-}
-
 export default show_alert

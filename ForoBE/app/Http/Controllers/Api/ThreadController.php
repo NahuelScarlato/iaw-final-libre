@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Thread;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,14 @@ class ThreadController extends Controller
 
     public function show(string $id)
     {
-        return Thread::find($id);
+        $thread = Thread::find($id);
+        $comments = Comment::query()
+            ->orderBy('created_at', 'desc')
+            ->whereIn('id', $thread->comments)
+            ->get();
+        $thread->comments = $comments;
+
+        return response()->json($thread);
     }
 
     public function update(Request $request, string $id)

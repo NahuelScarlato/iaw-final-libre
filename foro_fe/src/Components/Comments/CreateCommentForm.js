@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {createComment} from "../../Utils/ApiCalls"
 import storage from "../../Storage/storage"
+import comment from "./Comment";
 
 const INITIAL_STATE = {
     text: '',
@@ -9,7 +10,7 @@ const INITIAL_STATE = {
     author: ''
 }
 
-const CreateCommentForm = (createdNewComment) => {
+const CreateCommentForm = ({createdNewComment, threadId}) => {
     const [formData, setFormData] = useState(INITIAL_STATE)
 
     const handleChange = (e) => {
@@ -28,7 +29,7 @@ const CreateCommentForm = (createdNewComment) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const commentData = {...formData, author: storage.get("authUser").id}
+        const commentData = {...formData, threadId: threadId, author: storage.get("authUser").id}
         createComment(commentData)
         setFormData(INITIAL_STATE)
         createdNewComment()

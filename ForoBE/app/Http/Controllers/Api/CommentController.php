@@ -4,19 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\Thread;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function index()
-    {
-        $comments = Comment::query()
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return response()->json($comments);
-    }
-
     public function store(Request $request)
     {
         $comment = new Comment();
@@ -26,11 +18,12 @@ class CommentController extends Controller
         $comment->author = $request->author;
 
         $comment->save();
-    }
 
-    public function show(string $id)
-    {
-        return Comment::find($id);
+        $thread = Thread::find($request->threadId);
+        $comments = $thread->comments;
+        $comments[] = $comment->id;
+        $thread->comments = $comments;
+        $thread->save();
     }
 
     public function update(Request $request, string $id)

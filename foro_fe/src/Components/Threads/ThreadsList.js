@@ -34,7 +34,7 @@ const ThreadsList = () => {
         </div>
         <div>
             {threads.map((thread, index) => (
-                <ThreadPreview key={"thread-"+index} thread={thread}/>
+                <ThreadPreview key={"thread-"+index} thread={thread} showCommentsLink={true}/>
             ))}
         </div>
     </div>
