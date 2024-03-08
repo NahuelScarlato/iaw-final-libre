@@ -16,11 +16,10 @@ return new class extends Migration
             $table->json('images');
             $table->json('likes');
             $table->json('dislikes');
+            $table->json('comments');
+            $table->boolean('closed')->default(0);
             $table->unsignedBigInteger('author');
             $table->foreign('author')->references('id')->on('users')->onDelete('cascade');
-            $table->json('comments');
-            $table->boolean('closed');
-            $table->boolean('blocked');
             $table->timestamps();
         });
     }

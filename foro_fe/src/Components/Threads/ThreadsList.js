@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
 
 import {getAllThreads} from "../../Utils/ApiCalls";
 import Thread from "./Thread";
+import CreateThreadForm from "./CreateThreadForm";
 
 const ThreadsList = () => {
+    const [showCreateForm, setShowCreateForm] = React.useState(false);
     const [threads, setThreads] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -13,26 +14,29 @@ const ThreadsList = () => {
         setThreads(response)
     }
 
-    const createNewThread = () => {
-
+    const createdNewThread = () => {
+        setShowCreateForm(false)
+        setLoading(true)
+        getThreads()
+        setLoading(false)
     }
 
     useEffect(()=>{
         getThreads()
-        console.log(threads)
         setLoading(false)
     }, [])
 
     if (loading) return <>Loading...</>
 
     return <div>
-        <h3>Threads</h3>
         <div className="d-grid gap-2">
-            <Link to="/create" className="'bt btn-success bt-lg mt-2 mb-2 text-white">Create New Thread</Link>
+            {showCreateForm
+                ? <CreateThreadForm createdNewThread={createdNewThread}/>
+                : <button className="btn btn-success bt-lg mb-2" onClick={() => setShowCreateForm(true)}>Crear un nuevo hilo</button>}
         </div>
         <div>
-            {threads.map((thread) => (
-                <Thread thread={thread}/>
+            {threads.map((thread, index) => (
+                <Thread key={"thread-"+index} thread={thread}/>
             ))}
         </div>
     </div>

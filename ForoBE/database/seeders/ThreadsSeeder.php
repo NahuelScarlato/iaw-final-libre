@@ -14,13 +14,12 @@ class ThreadsSeeder extends Seeder
             'title' => 'Free time',
             'tags' => "[\"Games\", \"PC\"]",
             'images' => "[]",
-            'text' => fake()->text,
+            'text' => fake()->text . fake()->text  . fake()->text,
             'likes' => "[1,2]",
             'dislikes' => "[]",
             'author' => 1,
             'comments' => "[1,2]",
-            'closed' => 0,
-            'blocked' => 0
+            'closed' => 0
         ]);
 
         \App\Models\Thread::factory()->create([
@@ -32,8 +31,7 @@ class ThreadsSeeder extends Seeder
             'dislikes' => "[1]",
             'author' => 2,
             'comments' => "[3]",
-            'closed' => 1,
-            'blocked' => 0
+            'closed' => 1
         ]);
     }
 }

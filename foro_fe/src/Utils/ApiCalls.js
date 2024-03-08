@@ -18,3 +18,6 @@ export const logoutUser = async () =>
 
 export const getAllThreads = async () =>
     await sendRequest("GET", null,"/api/threads", true)
+
+export const createThread = async (threadData) =>
+    await sendRequest("POST", threadData,"/api/thread", false)

@@ -10,17 +10,21 @@ class ThreadController extends Controller
 {
     public function index()
     {
-        return Thread::all();
+        $threads = Thread::query()
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return response()->json($threads);
     }
 
     public function store(Request $request)
     {
         $thread = new Thread();
         $thread->title = $request->title;
-        $thread->comments = $request->comments;
-        $thread->closed = $request->closed;
-
-
+        $thread->tags = json_encode($request->tags);
+        $thread->text = $request->text;
+        $thread->images = json_encode($request->images);
+        $thread->author = $request->author;
 
         $thread->save();
     }

@@ -24,8 +24,7 @@ class ThreadFactory extends Factory
             'dislikes' => "[]",
             'author' => 1,
             'comments' => "[1]",
-            'closed' => 0,
-            'blocked' => 0
+            'closed' => 0
         ];
     }
 }

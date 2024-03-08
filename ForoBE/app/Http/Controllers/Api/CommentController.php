@@ -10,7 +10,16 @@ class CommentController extends Controller
 {
     public function index()
     {
-        return Comment::all();
+        $comments = Comment::all();
+        $comments->transform(function ($comment) {
+            $comment->tags = json_decode($comment->tags);
+            $comment->images = json_decode($comment->images);
+            $comment->likes = json_decode($comment->likes);
+            $comment->dislikes = json_decode($comment->dislikes);
+            return $comment;
+        });
+
+        return response()->json($comments);
     }
 
     public function store(Request $request)
