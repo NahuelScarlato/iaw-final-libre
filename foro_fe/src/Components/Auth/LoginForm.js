@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import {useNavigate} from "react-router-dom";
-import {loginUser} from "../../Utils/ApiCalls";
+import React, { useState } from 'react'
+import {useNavigate} from "react-router-dom"
+import {loginUser} from "../../Utils/ApiCalls"
 import storage from "../../Storage/storage"
 
 const LoginForm = () => {
     const [userData, setUserData] = useState({
         email: '',
         password: ''
-    });
+    })
     const go = useNavigate()
 
     const login = async (e) => {
@@ -21,9 +21,9 @@ const LoginForm = () => {
     }
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUserData({ ...userData, [name]: value });
-    };
+        const { name, value } = e.target
+        setUserData({ ...userData, [name]: value })
+    }
 
     return (
         <div className="container mt-5">
@@ -60,7 +60,7 @@ const LoginForm = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default LoginForm;
+export default LoginForm

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {registerUser} from "../../Utils/ApiCalls";
+import React, {useState} from 'react'
+import {registerUser} from "../../Utils/ApiCalls"
 import storage from "../../Storage/storage"
 
 const DEFAULT_USER_DATA = {
@@ -10,12 +10,12 @@ const DEFAULT_USER_DATA = {
 }
 
 const RegisterForm = ({handleToggleForm}) => {
-    const [userData, setUserData] = useState(DEFAULT_USER_DATA);
+    const [userData, setUserData] = useState(DEFAULT_USER_DATA)
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUserData({ ...userData, [name]: value });
-    };
+        const { name, value } = e.target
+        setUserData({ ...userData, [name]: value })
+    }
 
     const register = async (e) => {
         e.preventDefault()
@@ -25,7 +25,7 @@ const RegisterForm = ({handleToggleForm}) => {
             storage.set("authUser", res.user)
             handleToggleForm()
         }
-    };
+    }
 
     return (
         <div className="container mt-5">
@@ -86,7 +86,7 @@ const RegisterForm = ({handleToggleForm}) => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default RegisterForm;
+export default RegisterForm

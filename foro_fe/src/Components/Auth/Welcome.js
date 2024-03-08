@@ -1,13 +1,13 @@
-import React from 'react';
-import LoginForm from './LoginForm';
-import RegisterForm from './RegisterForm';
+import React from 'react'
+import LoginForm from './LoginForm'
+import RegisterForm from './RegisterForm'
 
 const Welcome = () => {
-    const [showLogin, setShowLogin] = React.useState(true);
+    const [showLogin, setShowLogin] = React.useState(true)
 
     const handleToggleForm = () => {
-        setShowLogin(!showLogin);
-    };
+        setShowLogin(!showLogin)
+    }
 
     return (
         <div className="container mt-5">

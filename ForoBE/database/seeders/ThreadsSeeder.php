@@ -12,25 +12,25 @@ class ThreadsSeeder extends Seeder
     {
         \App\Models\Thread::factory()->create([
             'title' => 'Free time',
-            'tags' => "[\"Games\", \"PC\"]",
-            'images' => "[]",
+            'tags' => json_decode("[\"Games\", \"PC\"]",true),
+            'images' => json_decode("[]",true),
             'text' => fake()->text . fake()->text  . fake()->text,
-            'likes' => "[1,2]",
-            'dislikes' => "[]",
+            'likes' => json_decode("[1,2]", true),
+            'dislikes' => json_decode("[]",true),
             'author' => 1,
-            'comments' => "[1,2]",
+            'comments' => json_decode("[1,2]",true),
             'closed' => 0
         ]);
 
         \App\Models\Thread::factory()->create([
             'title' => 'University',
-            'tags' => "[\"Study\"]",
-            'images' => "[]",
-            'text' => fake()->text,
-            'likes' => "[]",
-            'dislikes' => "[1]",
+            'tags' => json_decode("[\"Study\"]",true),
+            'images' => json_decode("[]",true),
+            'text' => fake()->text . fake()->text . "\n" . fake()->text,
+            'likes' => json_decode("[]",true),
+            'dislikes' => json_decode("[1]", true),
             'author' => 2,
-            'comments' => "[3]",
+            'comments' => json_decode("[3]",true),
             'closed' => 1
         ]);
     }

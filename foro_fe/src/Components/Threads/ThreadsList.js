@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react"
 
-import {getAllThreads} from "../../Utils/ApiCalls";
-import Thread from "./Thread";
-import CreateThreadForm from "./CreateThreadForm";
+import {getAllThreads} from "../../Utils/ApiCalls"
+import ThreadPreview from "./ThreadPreview"
+import CreateThreadForm from "./CreateThreadForm"
 
 const ThreadsList = () => {
-    const [showCreateForm, setShowCreateForm] = React.useState(false);
+    const [showCreateForm, setShowCreateForm] = React.useState(false)
     const [threads, setThreads] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -16,9 +16,7 @@ const ThreadsList = () => {
 
     const createdNewThread = () => {
         setShowCreateForm(false)
-        setLoading(true)
         getThreads()
-        setLoading(false)
     }
 
     useEffect(()=>{
@@ -36,7 +34,7 @@ const ThreadsList = () => {
         </div>
         <div>
             {threads.map((thread, index) => (
-                <Thread key={"thread-"+index} thread={thread}/>
+                <ThreadPreview key={"thread-"+index} thread={thread}/>
             ))}
         </div>
     </div>

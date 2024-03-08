@@ -10,14 +10,9 @@ class CommentController extends Controller
 {
     public function index()
     {
-        $comments = Comment::all();
-        $comments->transform(function ($comment) {
-            $comment->tags = json_decode($comment->tags);
-            $comment->images = json_decode($comment->images);
-            $comment->likes = json_decode($comment->likes);
-            $comment->dislikes = json_decode($comment->dislikes);
-            return $comment;
-        });
+        $comments = Comment::query()
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return response()->json($comments);
     }
@@ -25,11 +20,9 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $comment = new Comment();
-        $comment->tags = $request->tags;
+        $comment->tags = json_encode($request->tags);
         $comment->text = $request->text;
-        $comment->images = $request->images;
-        $comment->likes = $request->likes;
-        $comment->dislikes = $request->dislikes;
+        $comment->images = json_encode($request->images);;
         $comment->author = $request->author;
 
         $comment->save();
@@ -43,12 +36,8 @@ class CommentController extends Controller
     public function update(Request $request, string $id)
     {
         $comment = Comment::findOrFail($id);
-        $comment->tags = $request->tags;
-        $comment->text = $request->text;
-        $comment->images = $request->images;
         $comment->likes = $request->likes;
         $comment->dislikes = $request->dislikes;
-        $comment->author = $request->author;
         $comment->save();
 
         return $comment;

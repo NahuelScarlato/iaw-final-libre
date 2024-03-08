@@ -21,9 +21,9 @@ class ThreadController extends Controller
     {
         $thread = new Thread();
         $thread->title = $request->title;
-        $thread->tags = json_encode($request->tags);
+        $thread->tags = $request->tags;
         $thread->text = $request->text;
-        $thread->images = json_encode($request->images);
+        $thread->images = $request->images;
         $thread->author = $request->author;
 
         $thread->save();
@@ -37,8 +37,7 @@ class ThreadController extends Controller
     public function update(Request $request, string $id)
     {
         $thread = Thread::findOrFail($id);
-        $thread->title = $request->title;
-        $thread->comments = $request->comments;
+        $thread->comments = json_encode($request->comments);
         $thread->closed = $request->closed;
         $thread->save();
 

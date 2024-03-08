@@ -5,6 +5,7 @@ import ProtectedRoutes from "./Utils/ProtectedRoutes"
 import MyThreads from "./Components/MyThreads"
 import Welcome from "./Components/Auth/Welcome"
 import Dashboard from "./Components/Dashboard"
+import Thread from "./Components/Threads/Thread"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
                 <Route path="/" element={ <Welcome/> }/>
                 <Route element={ <ProtectedRoutes/> }>
                     <Route path="/dashboard" element={ <Dashboard/> }/>
+                    <Route path="/thread/:threadId" component={ <Thread /> }/>
                     <Route path="/my-threads" element={ <MyThreads/> }/>
                 </Route>
             </Routes>

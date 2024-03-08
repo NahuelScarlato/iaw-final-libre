@@ -1,17 +1,15 @@
 import React, {useState} from 'react'
-import {createThread} from "../../Utils/ApiCalls"
+import {createComment} from "../../Utils/ApiCalls"
 import storage from "../../Storage/storage"
 
 const INITIAL_STATE = {
-    title: '',
     text: '',
     images: [],
-    comments: [],
     tags: [],
     author: ''
 }
 
-const CreateThreadForm = ({ createdNewThread }) => {
+const CreateCommentForm = (createdNewComment) => {
     const [formData, setFormData] = useState(INITIAL_STATE)
 
     const handleChange = (e) => {
@@ -30,25 +28,16 @@ const CreateThreadForm = ({ createdNewThread }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const threadData = {...formData, author: storage.get("authUser").id}
-        createThread(threadData)
+        const commentData = {...formData, author: storage.get("authUser").id}
+        createComment(commentData)
         setFormData(INITIAL_STATE)
-        createdNewThread()
+        createdNewComment()
     }
 
     return (
         <div className="card mb-2">
             <div className="card-body">
                 <form onSubmit={handleSubmit}>
-                    <input
-                        className="form-control mb-2"
-                        type="text"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                        placeholder="Titulo..."
-                        required
-                    />
                     <input
                         className="form-control mb-2"
                         type="text"
@@ -72,12 +61,12 @@ const CreateThreadForm = ({ createdNewThread }) => {
                         id="imageInput"
                         onChange={handleFileChange}
                     />
-                    <button className="btn btn-primary mx-2" type="submit">Publicar</button>
-                    <button className="btn btn-secondary mx-2" onClick={() => createdNewThread()}>Cancelar</button>
+                    <button className="btn btn-primary mx-2" type="submit">Comentar</button>
+                    <button className="btn btn-secondary mx-2" onClick={() => createdNewComment()}>Cancelar</button>
                 </form>
             </div>
         </div>
     )
 }
 
-export default CreateThreadForm
+export default CreateCommentForm

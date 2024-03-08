@@ -19,5 +19,11 @@ export const logoutUser = async () =>
 export const getAllThreads = async () =>
     await sendRequest("GET", null,"/api/threads", true)
 
+export const getThreadByIdWithComments = async (threadId) =>
+    await sendRequest("GET", null,"/api/thread/"+threadId, true)
+
 export const createThread = async (threadData) =>
     await sendRequest("POST", threadData,"/api/thread", false)
+
+export const createComment = async (commentData) =>
+    await sendRequest("POST", commentData,"/api/comment", false)
