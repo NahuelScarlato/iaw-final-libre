@@ -12,9 +12,9 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $comment = new Comment();
-        $comment->tags = json_encode($request->tags);
+        $comment->tags = $request->tags;
         $comment->text = $request->text;
-        $comment->images = json_encode($request->images);;
+        $comment->images = $request->images;
         $comment->author = $request->author;
 
         $comment->save();

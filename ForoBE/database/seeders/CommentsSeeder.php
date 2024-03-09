@@ -22,7 +22,7 @@ class CommentsSeeder extends Seeder
         \App\Models\Comment::factory()->create([
             'text' => 'Nah, I like LOL more',
             'tags' => json_decode("[\"LOL\"]", true),
-            'images' => json_decode("[]", true),
+            'images' => json_decode("[\"https://res.cloudinary.com/nahuelcloudiaw/image/upload/v1710003078/iaw_foro/edadtsdzoe6lljawrnab.jpg\"]", true),
             'likes' => json_decode("[]", true),
             'dislikes' => json_decode("[]", true),
             'author' => 3

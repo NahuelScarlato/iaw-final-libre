@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {createComment} from "../../Utils/ApiCalls"
+import ImageUploader from "../../Utils/ImageUploader"
 import storage from "../../Storage/storage"
-import comment from "./Comment";
 
 const INITIAL_STATE = {
     text: '',
@@ -23,8 +23,10 @@ const CreateCommentForm = ({createdNewComment, threadId}) => {
         setFormData({ ...formData, tags: tags })
     }
 
-    const handleFileChange = () => {
-        setFormData({...formData, images: [formData.image]})
+    const setImageInThread = (imageSrc) => {
+        let data = formData.images
+        data.push(imageSrc)
+        setFormData({...formData, images: data})
     }
 
     const handleSubmit = (e) => {
@@ -44,7 +46,7 @@ const CreateCommentForm = ({createdNewComment, threadId}) => {
                         type="text"
                         name="tag"
                         onChange={handleTags}
-                        placeholder="Tags... (ejemplo: TV,Boca Juniors,Whisky)"
+                        placeholder="Tags... (ejemplo: TV,Boca Juniors,Ci-fi)"
                     />
                     <textarea
                         className="form-control mb-2"
@@ -54,14 +56,7 @@ const CreateCommentForm = ({createdNewComment, threadId}) => {
                         placeholder="Texto..."
                         required
                     />
-                    <input
-                        className="form-control mb-2"
-                        type="file"
-                        name="image"
-                        accept="image/*"
-                        id="imageInput"
-                        onChange={handleFileChange}
-                    />
+                    <ImageUploader setImageInThread={setImageInThread}/>
                     <button className="btn btn-primary mx-2" type="submit">Comentar</button>
                     <button className="btn btn-secondary mx-2" onClick={() => createdNewComment()}>Cancelar</button>
                 </form>

@@ -31,7 +31,7 @@ const Thread = () => {
         <div className="container mt-5">
             <div className="justify-content-center">
                 <ThreadPreview key={"thread-" + thread.id} thread={thread} />
-                <CommentsList threadId={thread.id} threadComments={thread.comments}/>
+                <CommentsList threadId={thread.id} threadComments={thread.comments} threadClosed={thread.closed}/>
             </div>
         </div>
     )
