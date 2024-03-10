@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,33 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    /**
+     * Display all the users.
+     */
+    public function adminIndex(): View
+    {
+        $users = User::all();
+
+        return view('profile.users', [
+            'users' => $users,
+        ]);
+    }
+
+    /**
+     * Ban user
+     */
+    public function adminBan(Request $request): RedirectResponse
+    {
+        $user = User::find($request->id);
+        $user->banned = !$user->banned;
+
+        $user->save();
+
+        $users = User::all();
+
+        return Redirect::route('users')->with('users', $users);
+    }
+
     /**
      * Display the user's profile form.
      */

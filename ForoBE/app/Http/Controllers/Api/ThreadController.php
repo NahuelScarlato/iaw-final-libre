@@ -18,6 +18,15 @@ class ThreadController extends Controller
         return response()->json($threads);
     }
 
+    public function adminIndex()
+    {
+        $threads = Thread::query()
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('auth.login', json_decode($threads, true));
+    }
+
     public function store(Request $request)
     {
         $thread = new Thread();
