@@ -23,6 +23,7 @@ Route::controller(ThreadController::class)->group(function () {
 
 Route::controller(CommentController::class)->group(function () {
     Route::post('/comments', 'adminStore')->name('comments.store');
+    Route::delete('/comment/{id}', 'adminDelete')->name('comments.delete');
 });
 
 Route::controller(ProfileController::class)->group(function () {

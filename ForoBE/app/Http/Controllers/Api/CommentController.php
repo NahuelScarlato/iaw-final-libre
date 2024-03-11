@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Thread;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use OpenApi\Annotations as OA;
 
 class CommentController extends Controller
@@ -27,8 +28,7 @@ class CommentController extends Controller
      *             @OA\Property(property="threadId", type="string")
      *         )
      *     ),
-     *     @OA\Response(response="200", description="Comment created"),
-     *     @OA\Response(response="500", description="Internal server error")
+     *     @OA\Response(response="200", description="Comment created")
      * )
      */
     public function store(Request $request)
@@ -70,8 +70,7 @@ class CommentController extends Controller
      *         )
      *     ),
      *     @OA\Response(response="200", description="Comment updated"),
-     *     @OA\Response(response="404", description="Comment not found"),
-     *     @OA\Response(response="500", description="Internal server error")
+     *     @OA\Response(response="404", description="Comment not found")
      * )
      */
     public function update(Request $request, string $id)
@@ -82,5 +81,21 @@ class CommentController extends Controller
         $comment->save();
 
         return $comment;
+    }
+
+    public function adminDelete(string $id): View
+    {
+        $thread = Thread::query()->whereJsonContains('comments', $id);
+        $keyToRemove = array_search($id, $thread->comments);
+
+        if ($keyToRemove !== false) {
+            unset($thread->comments[$keyToRemove]);
+        }
+        $thread->save();
+
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+
+        return view('components.threads.thread', ["thread" => $thread]);
     }
 }

@@ -2,7 +2,7 @@ import axios from "axios";
 import {sendRequest} from "./ShowAlerts";
 
 window.axios = axios
-window.axios.defaults.baseURL = "http://localhost:8000"
+window.axios.defaults.baseURL = "https://iaw-final-libre-production.up.railway.app/"
 window.axios.defaults.headers.common["Accept"] = "application/json"
 window.axios.defaults.headers.common["Content-Type"] = "application/json"
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest"
