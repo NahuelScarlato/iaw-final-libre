@@ -1,15 +1,13 @@
 <div class="grid d-grid">
-    @if ($showCreateForm)
-        @include('create-comment-form', ['threadId' => $threadId])
-    @else
-        <button class="btn btn-success bt-lg mb-2" {{ $threadClosed ? 'disabled' : '' }} onclick="setShowCreateForm(true)">Agregar comentario</button>
+    @if (!$threadClosed)
+        @include('components.comments.create-comment-form', ['threadId' => $threadId])
     @endif
 </div>
 
 <ul class="list-group">
-    @foreach ($comments as $comment)
+    @foreach ($threadComments as $comment)
         <li class="list-unstyled">
-            @include('comment', ['comment' => $comment])
+            @include('components.comments.comment', ['comment' => json_decode(json_encode($comment))])
         </li>
     @endforeach
 </ul>

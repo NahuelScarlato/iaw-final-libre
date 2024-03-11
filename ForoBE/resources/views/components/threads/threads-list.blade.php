@@ -10,15 +10,11 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-4 text-gray-900">
                     <div class="d-grid gap-2">
-                        @if ($showCreateForm)
-                            @include('components.threads.create-thread-form')
-                        @else
-                            <a class="btn btn-success bt-lg mb-2" href="/threads?create=true">Crear un nuevo hilo</a>
-                        @endif
+                        <a class="btn btn-success bt-lg mb-2" href="/createThreadForm">Crear un nuevo hilo</a>
                     </div>
                     <div>
                         @foreach ($threads as $index => $thread)
-                            @include('partials.thread-preview', ['thread' => $thread, 'showCommentsLink' => true])
+                            @include('components.threads.thread-preview', ['thread' => $thread, 'showCommentsLink' => true])
                         @endforeach
                     </div>
                 </div>

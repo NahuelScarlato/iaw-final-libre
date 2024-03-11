@@ -15,8 +15,7 @@
                 required
             ></textarea>
             {{-- Aquí deberías incluir el componente ImageUploader como lo haces en React --}}
-            <button class="btn btn-primary mx-2" type="submit">Comentar</button>
-            <button class="btn btn-secondary mx-2" type="button" onclick="cancelComment()">Cancelar</button>
+            <button class="btn mx-2" type="submit">Comentar</button>
         </form>
     </div>
 </div>

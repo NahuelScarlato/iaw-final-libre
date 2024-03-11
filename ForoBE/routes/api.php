@@ -21,7 +21,6 @@ Route::middleware('cors')->group(function () {
             Route::get('/threads', 'index');
             Route::post('/thread', 'store');
             Route::get('/thread/{id}', 'show');
-            Route::put('/thread/{id}', 'update');
         });
     });
 });

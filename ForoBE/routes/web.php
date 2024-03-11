@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ThreadController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,14 @@ Route::get('/dashboard', function () {
 
 Route::controller(ThreadController::class)->group(function () {
     Route::get('/threads', 'adminIndex')->name('threads');
+    Route::get('/createThreadForm', 'adminCreateThreadForm')->name('thread.create.form');
+    Route::post('/threads', 'store')->name('threads.store');
+    Route::get('/thread/{id}', 'adminShow')->name('threads.show');
+    Route::patch('/thread/{id}', 'adminClose')->name('threads.close');
+});
+
+Route::controller(CommentController::class)->group(function () {
+    Route::post('/comments', 'adminStore')->name('comments.store');
 });
 
 Route::controller(ProfileController::class)->group(function () {
