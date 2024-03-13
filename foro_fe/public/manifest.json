@@ -1,13 +1,11 @@
 {
   "name": "Roddut",
   "short_name": "roddut",
-  "categories": ["blogs"],
   "dir": "ltr",
-  "display_override": ["standalone", "fullscreen"],
   "display": "standalone",
-  "start_url": "/index.html",
-  "background_color": "white",
-  "theme_color": "white",
+  "start_url": ".",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "scope": "/",
   "icons": [
     {
