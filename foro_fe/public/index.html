@@ -12,6 +12,18 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>IAW Forum</title>
+    <script>
+      if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('../src/sw.js', { scope: "/" })
+            .then((registration) => {
+              console.log('Service Worker Registered')
+            })
+          navigator.serviceWorker.ready
+            .then((registration) => {
+              console.log('Service Worker Registered')
+            })
+      }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
