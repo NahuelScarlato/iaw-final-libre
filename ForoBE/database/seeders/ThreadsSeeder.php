@@ -25,7 +25,7 @@ class ThreadsSeeder extends Seeder
         \App\Models\Thread::factory()->create([
             'title' => 'University',
             'tags' => json_decode("[\"Study\"]",true),
-            'images' => json_decode("[\"https://res.cloudinary.com/nahuelcloudiaw/image/upload/v1710002851/iaw_foro/kh0jjpvwgirbxcjqef53.png\",\"https://res.cloudinary.com/nahuelcloudiaw/image/upload/v1710002860/iaw_foro/hxw0d6wnugolvirc8yro.jpg\"]",true),
+            'images' => json_decode("[\"https://res.cloudinary.com/nahuelcloudiaw/image/upload/v1710002851/iaw_foro/kh0jjpvwgirbxcjqef53.png\",\"https://res.cloudinary.com/nahuelcloudiaw/image/upload/v1710367299/iaw_foro/uqi4vev62s6hsenrnzcd.jpg\"]",true),
             'text' => fake()->text . fake()->text . "\n" . fake()->text,
             'likes' => json_decode("[]",true),
             'dislikes' => json_decode("[1]", true),
