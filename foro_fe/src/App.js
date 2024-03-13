@@ -7,7 +7,6 @@ import Welcome from "./Components/Auth/Welcome"
 import Dashboard from "./Components/Dashboard"
 import Thread from "./Components/Threads/Thread"
 
-
 function App() {
     return (
         <div className="App">

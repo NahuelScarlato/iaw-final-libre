@@ -1,9 +1,35 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {Link, useNavigate} from "react-router-dom"
 import storage from "../Storage/storage"
 import {logoutUser} from "./ApiCalls"
 
 const Nav = () => {
+    const [isReadyForInstall, setIsReadyForInstall] = React.useState(false)
+
+    useEffect(() => {
+        window.addEventListener("beforeinstallprompt", (event) => {
+            event.preventDefault();
+            console.log("👍", "beforeinstallprompt", event);
+            window.deferredPrompt = event;
+            setIsReadyForInstall(true);
+        });
+    }, []);
+
+    async function downloadApp() {
+        console.log("👍", "butInstall-clicked");
+        const promptEvent = window.deferredPrompt;
+        if (!promptEvent) {
+            // The deferred prompt isn't available.
+            console.log("oops, no prompt event guardado en window");
+            return;
+        }
+        promptEvent.prompt();
+        const result = await promptEvent.userChoice;
+        console.log("👍", "userChoice", result);
+        window.deferredPrompt = null;
+        setIsReadyForInstall(false);
+    }
+
     const go = useNavigate()
     const logout = async() => {
         await logoutUser()
@@ -31,6 +57,11 @@ const Nav = () => {
                             </li>
                         </ul>
                         <ul className="navbar-nav">
+                            {isReadyForInstall && (
+                                <li className="nav-item px-lg-5">
+                                    <button className="btn btn-danger" onClick={downloadApp}>Descargar PWA</button>
+                                </li>
+                            )}
                             <li className="nav-item px-lg-5">
                                 <button className="btn btn-info" onClick={logout}>Logout</button>
                             </li>

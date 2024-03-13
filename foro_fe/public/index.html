@@ -10,20 +10,15 @@
       content="Web site created using create-react-app"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <meta name="apple-mobile-web-app-title" content="POC PWA" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
+    />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
     <title>IAW Forum</title>
-    <script>
-      if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('../src/sw.js', { scope: "/" })
-            .then((registration) => {
-              console.log('Service Worker Registered')
-            })
-          navigator.serviceWorker.ready
-            .then((registration) => {
-              console.log('Service Worker Registered')
-            })
-      }
-    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
