@@ -16,7 +16,7 @@ Route::get('/dashboard', function () {
 Route::controller(ThreadController::class)->group(function () {
     Route::get('/threads', 'adminIndex')->name('threads');
     Route::get('/createThreadForm', 'adminCreateThreadForm')->name('thread.create.form');
-    Route::post('/threads', 'store')->name('threads.store');
+    Route::post('/threads', 'adminStore')->name('threads.store');
     Route::get('/thread/{id}', 'adminShow')->name('threads.show');
     Route::patch('/thread/{id}', 'adminClose')->name('threads.close');
 });

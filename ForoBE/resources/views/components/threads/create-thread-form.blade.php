@@ -14,12 +14,6 @@
                             <form action="{{ route('threads.store') }}" method="POST">
                                 @csrf
                                 <input
-                                    id="author"
-                                    name="author"
-                                    value=""
-                                    type="hidden"
-                                >
-                                <input
                                     class="form-control mb-2"
                                     type="text"
                                     name="title"
@@ -29,7 +23,7 @@
                                 <input
                                     class="form-control mb-2"
                                     type="text"
-                                    name="tag"
+                                    name="tags"
                                     placeholder="Tags... (ejemplo: TV,Boca Juniors,Whisky)"
                                 />
                                 <textarea

@@ -68,6 +68,7 @@ class Comment extends Model
     protected function setDefaultValues()
     {
         $this->attributes['images'] = $this->attributes['images'] ?? '[]';
+        $this->attributes['tags'] = $this->attributes['tags'] ?? '[]';
         $this->attributes['likes'] = $this->attributes['likes'] ?? '[]';
         $this->attributes['dislikes'] = $this->attributes['dislikes'] ?? '[]';
     }

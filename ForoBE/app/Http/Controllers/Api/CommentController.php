@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Thread;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use OpenApi\Annotations as OA;
 
@@ -34,9 +35,9 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $comment = new Comment();
-        $comment->tags = $request->tags;
+        $comment->tags = $request->tags ?? [];
         $comment->text = $request->text;
-        $comment->images = $request->images;
+        $comment->images = $request->images ?? [];
         $comment->author = $request->author;
 
         $comment->save();
@@ -95,6 +96,31 @@ class CommentController extends Controller
 
         $comment = Comment::findOrFail($id);
         $comment->delete();
+
+        return view('components.threads.thread', ["thread" => $thread]);
+    }
+
+    public function adminStore(Request $request): View
+    {
+        $comment = new Comment();
+        $comment->tags = $request->tags ? explode(',', $request->tags) : [];
+        $comment->text = $request->text;
+        $comment->images = $request->images ? explode(' ', $request->images) : [];
+        $comment->author = Auth::id();
+
+        $comment->save();
+
+        $thread = Thread::find($request->threadId);
+        $comments = $thread->comments;
+        $comments[] = $comment->id;
+        $thread->comments = $comments;
+        $thread->save();
+
+        $comments = Comment::query()
+            ->orderBy('created_at', 'desc')
+            ->whereIn('id', $thread->comments)
+            ->get();
+        $thread->comments = $comments;
 
         return view('components.threads.thread', ["thread" => $thread]);
     }

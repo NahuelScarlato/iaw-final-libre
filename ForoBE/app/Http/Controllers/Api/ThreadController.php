@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Thread;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use OpenApi\Annotations as OA;
 
@@ -33,20 +34,6 @@ class ThreadController extends Controller
             ->get();
 
         return response()->json($threads);
-    }
-
-    public function adminIndex(): View
-    {
-        $threads = Thread::query()
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return view('components.threads.threads-list', ["threads" => $threads]);
-    }
-
-    public function adminCreateThreadForm(): View
-    {
-        return view('components.threads.create-thread-form');
     }
 
     /**
@@ -108,18 +95,6 @@ class ThreadController extends Controller
         return response()->json($thread);
     }
 
-    public function adminShow(string $id): View
-    {
-        $thread = Thread::find($id);
-        $comments = Comment::query()
-            ->orderBy('created_at', 'desc')
-            ->whereIn('id', $thread->comments)
-            ->get();
-        $thread->comments = $comments;
-
-        return view('components.threads.thread', ["thread" => $thread]);
-    }
-
     /**
      * @OA\Patch(
      *     path="/threads/{id}",
@@ -159,5 +134,42 @@ class ThreadController extends Controller
         $thread->save();
 
         return $this->adminIndex();
+    }
+
+    public function adminStore(Request $request): View
+    {
+        $userId = Auth::id();
+        $request->merge(["author" => $userId]);
+        $request->tags = $request->tags ? explode(',', $request->tags) : [];
+        $request->images = $request->images ? explode(' ', $request->images) : [];
+        $this->store($request);
+
+        return $this->adminIndex();
+    }
+
+    public function adminShow(string $id): View
+    {
+        $thread = Thread::find($id);
+        $comments = Comment::query()
+            ->orderBy('created_at', 'desc')
+            ->whereIn('id', $thread->comments)
+            ->get();
+        $thread->comments = $comments;
+
+        return view('components.threads.thread', ["thread" => $thread]);
+    }
+
+    public function adminIndex(): View
+    {
+        $threads = Thread::query()
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('components.threads.threads-list', ["threads" => $threads]);
+    }
+
+    public function adminCreateThreadForm(): View
+    {
+        return view('components.threads.create-thread-form');
     }
 }

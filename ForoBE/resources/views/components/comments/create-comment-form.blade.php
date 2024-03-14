@@ -3,9 +3,15 @@
         <form action="{{ route('comments.store') }}" method="POST">
             @csrf
             <input
+                id="threadId"
+                name="threadId"
+                value={{ $threadId }}}
+                type="hidden"
+            />
+            <input
                 class="form-control mb-2"
                 type="text"
-                name="tag"
+                name="tags"
                 placeholder="Tags... (ejemplo: TV,Boca Juniors,Ci-fi)"
             />
             <textarea
@@ -14,7 +20,13 @@
                 placeholder="Texto..."
                 required
             ></textarea>
-            {{-- Aquí deberías incluir el componente ImageUploader como lo haces en React --}}
+            <input
+                id="images"
+                name="images"
+                value=""
+                type="hidden"
+            >
+            @include('components.partials.image-uploader')
             <button class="btn mx-2" type="submit">Comentar</button>
         </form>
     </div>
