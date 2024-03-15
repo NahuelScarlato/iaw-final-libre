@@ -10,13 +10,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use OpenApi\Annotations as OA;
 
+/**
+ * @OA\SecurityScheme(
+ *     type="http",
+ *     scheme="bearer",
+ *     securityScheme="bearerAuth"
+ * )
+ */
+
 class ThreadController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/threads",
+     *     path="/api/threads",
      *     tags={"Threads"},
      *     summary="Get all threads",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
@@ -38,9 +47,10 @@ class ThreadController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/threads",
+     *     path="/api/thread",
      *     tags={"Threads"},
      *     summary="Create a new thread",
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/Thread")
@@ -66,9 +76,10 @@ class ThreadController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/threads/{id}",
+     *     path="/api/thread/{id}",
      *     tags={"Threads"},
      *     summary="Get a specific thread",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -95,29 +106,6 @@ class ThreadController extends Controller
         return response()->json($thread);
     }
 
-    /**
-     * @OA\Patch(
-     *     path="/threads/{id}",
-     *     tags={"Threads"},
-     *     summary="Update a thread",
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="Thread ID",
-     *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Thread")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Thread updated successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/Thread")
-     *     )
-     * )
-     */
     public function update(Request $request, string $id)
     {
         $thread = Thread::findOrFail($id);

@@ -14,7 +14,7 @@ class CommentController extends Controller
 {
     /**
      * @OA\Post(
-     *     path="/api/comments",
+     *     path="/api/comment",
      *     tags={"Comments"},
      *     summary="Create a new comment",
      *     @OA\RequestBody(
@@ -29,6 +29,7 @@ class CommentController extends Controller
      *             @OA\Property(property="threadId", type="string")
      *         )
      *     ),
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(response="200", description="Comment created")
      * )
      */
@@ -49,36 +50,12 @@ class CommentController extends Controller
         $thread->save();
     }
 
-    /**
-     * @OA\Put(
-     *     path="/api/comments/{id}",
-     *     tags={"Comments"},
-     *     summary="Update an existing comment",
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID of the comment to update",
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Updated comment data",
-     *         @OA\JsonContent(
-     *             required={"likes", "dislikes"},
-     *             @OA\Property(property="likes", type="integer"),
-     *             @OA\Property(property="dislikes", type="integer")
-     *         )
-     *     ),
-     *     @OA\Response(response="200", description="Comment updated"),
-     *     @OA\Response(response="404", description="Comment not found")
-     * )
-     */
     public function update(Request $request, string $id)
     {
+        if (is_array($request->likes) && is_array($request->dislikes)) {}
         $comment = Comment::findOrFail($id);
         $comment->likes = $request->likes;
-        $comment->dislikes = $request->dislikes;
+        $comment->dislikes = $request->likes;
         $comment->save();
 
         return $comment;

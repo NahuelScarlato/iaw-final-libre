@@ -13,12 +13,12 @@ use OpenApi\Annotations as OA;
  *     description="Thread entity",
  *     @OA\Property(property="id", type="integer", example=1),
  *     @OA\Property(property="title", type="string", example="Thread Title"),
- *     @OA\Property(property="tags", type="string", example="Tag1, Tag2, Tag3"),
+ *     @OA\Property(property="tags", type="array", @OA\Items(type="string"), example={"Tag1", "Tag2"}),
  *     @OA\Property(property="text", type="string", example="Thread Text"),
  *     @OA\Property(property="images", type="array", @OA\Items(type="string"), example={"image1.jpg", "image2.jpg"}),
- *     @OA\Property(property="author", type="string", example="Author Name"),
- *     @OA\Property(property="created_at", type="string", format="datetime"),
- *     @OA\Property(property="updated_at", type="string", format="datetime"),
+ *     @OA\Property(property="author", type="string", example="Author user Id"),
+ *     @OA\Property(property="created_at", type="string", format="datetime", example="2024-03-15 21:50:00"),
+ *     @OA\Property(property="updated_at", type="string", format="datetime", example="2024-03-15 22:15:03"),
  * )
  */
 class Thread extends Model
