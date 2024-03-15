@@ -72,6 +72,8 @@ class ThreadController extends Controller
         $thread->author = $request->author;
 
         $thread->save();
+
+        return response()->json($thread);
     }
 
     /**
@@ -91,12 +93,23 @@ class ThreadController extends Controller
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/Thread")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Thread id was not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="El id no pertenece a un elemento existente")
+     *         )
      *     )
      * )
      */
     public function show(string $id)
     {
-        $thread = Thread::find($id);
+        try{
+            $thread = Thread::find($id);
+        } catch (\Exception) {
+            return response()->json(['message' => 'El id no pertenece a un elemento existente'], 404);
+        }
         $comments = Comment::query()
             ->orderBy('created_at', 'desc')
             ->whereIn('id', $thread->comments)

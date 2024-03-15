@@ -30,7 +30,18 @@ class CommentController extends Controller
      *         )
      *     ),
      *     security={{"bearerAuth": {}}},
-     *     @OA\Response(response="200", description="Comment created")
+     *     @OA\Response(
+     *         response=200,
+     *         description="Comment created",
+     *         @OA\JsonContent(ref="#/components/schemas/Comment")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Thread id was not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="El id no pertenece a un elemento existente")
+     *         )
+     *     )
      * )
      */
     public function store(Request $request)
@@ -43,16 +54,21 @@ class CommentController extends Controller
 
         $comment->save();
 
-        $thread = Thread::find($request->threadId);
+        try{
+            $thread = Thread::find($request->threadId);
+        } catch (\Exception) {
+            return response()->json(['message' => 'El id no pertenece a un elemento existente'], 404);
+        }
         $comments = $thread->comments;
         $comments[] = $comment->id;
         $thread->comments = $comments;
         $thread->save();
+
+        return response()->json(['commentId' => $comment->id]);
     }
 
     public function update(Request $request, string $id)
     {
-        if (is_array($request->likes) && is_array($request->dislikes)) {}
         $comment = Comment::findOrFail($id);
         $comment->likes = $request->likes;
         $comment->dislikes = $request->likes;
